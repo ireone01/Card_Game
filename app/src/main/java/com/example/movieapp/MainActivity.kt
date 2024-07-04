@@ -1,5 +1,6 @@
 package com.example.movieapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         rvBoard.setHasFixedSize(true)  // ??
         rvBoard.layoutManager =GridLayoutManager(this,boardSize.getWidth())
     }
+    @SuppressLint("RestrictedApi")
     private fun updateGameWithFlip(position: Int){
 
         if( memoryGame.haveWonGame()) {
@@ -66,15 +68,16 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG,"ban vua lat 1 cap the , so cap the hien tai : ${memoryGame.numPairFound}")
             val color = ArgbEvaluator().evaluate(
                 memoryGame.numPairFound.toFloat() / boardSize.getNumPairs(),
-                        ContextCompat.getColor(this,R.color.color_progress_none),
-                        ContextCompat.getColor(this,R.color.color_progress_full)
+                ContextCompat.getColor(this,R.color.color_progress_none),
+                ContextCompat.getColor(this,R.color.color_progress_full)
             ) as Int
+
             textView1.text ="Pair : ${memoryGame.numPairFound}/${boardSize.getNumPairs()}"
             if(memoryGame.haveWonGame()){
                 Snackbar.make(clRoot,"banj thangs ",Snackbar.LENGTH_LONG).show()
             }
         }
-        textView2 =" Moves : ${memoryGame.getNummoves()}"
+        textView2.text =" Moves : ${memoryGame.getNummoves()}"
         adapter.notifyDataSetChanged()
     }
 }
