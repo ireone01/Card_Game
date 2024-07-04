@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="số : 0/4"
+                android:text="Pair : 0/4"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         </androidx.cardview.widget.CardView>
 

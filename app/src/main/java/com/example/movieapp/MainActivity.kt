@@ -1,5 +1,4 @@
 package com.example.movieapp
-
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         textView2 = findViewById(R.id.textView2)
 
 
-        textView2.setTextColor(ContextCompat.getColor(this,R.color.color_progress_none))
+        textView1.setTextColor(ContextCompat.getColor(this,R.color.color_progress_none))
         memoryGame = MemoryGame(boardSize)
         adapter = MemoryBoardAdapter(this,boardSize,memoryGame.cards,object :MemoryBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
@@ -71,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                 ContextCompat.getColor(this,R.color.color_progress_none),
                 ContextCompat.getColor(this,R.color.color_progress_full)
             ) as Int
-
+            textView1.setTextColor(color)
             textView1.text ="Pair : ${memoryGame.numPairFound}/${boardSize.getNumPairs()}"
             if(memoryGame.haveWonGame()){
                 Snackbar.make(clRoot,"banj thangs ",Snackbar.LENGTH_LONG).show()
