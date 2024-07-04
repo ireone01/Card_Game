@@ -5,8 +5,10 @@ import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import com.example.movieapp.models.BoardSize
 import com.example.movieapp.models.MemoryCard
 import com.example.movieapp.models.MemoryGame
@@ -35,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         textView1 = findViewById(R.id.textView1)
         textView2 = findViewById(R.id.textView2)
 
+
+        textView2.setTextColor(ContextCompat.getColor(this,R.color.color_progress_none))
         memoryGame = MemoryGame(boardSize)
         adapter = MemoryBoardAdapter(this,boardSize,memoryGame.cards,object :MemoryBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
@@ -60,7 +64,17 @@ class MainActivity : AppCompatActivity() {
         }
         if(memoryGame.flipCard(position)){
             Log.i(TAG,"ban vua lat 1 cap the , so cap the hien tai : ${memoryGame.numPairFound}")
+            val color = ArgbEvaluator().evaluate(
+                memoryGame.numPairFound.toFloat() / boardSize.getNumPairs(),
+                        ContextCompat.getColor(this,R.color.color_progress_none),
+                        ContextCompat.getColor(this,R.color.color_progress_full)
+            ) as Int
+            textView1.text ="Pair : ${memoryGame.numPairFound}/${boardSize.getNumPairs()}"
+            if(memoryGame.haveWonGame()){
+                Snackbar.make(clRoot,"banj thangs ",Snackbar.LENGTH_LONG).show()
+            }
         }
+        textView2 =" Moves : ${memoryGame.getNummoves()}"
         adapter.notifyDataSetChanged()
     }
 }
