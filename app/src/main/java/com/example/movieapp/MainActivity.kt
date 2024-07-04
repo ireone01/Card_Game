@@ -2,6 +2,8 @@ package com.example.movieapp
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -37,21 +39,40 @@ class MainActivity : AppCompatActivity() {
         textView1 = findViewById(R.id.textView1)
         textView2 = findViewById(R.id.textView2)
 
+        setupBoard()
 
+    }
+
+
+    @SuppressLint("RestrictedApi")
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+       menuInflater.inflate(R.menu.menu_main,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.mi_refresh -> {
+                setupBoard()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    private fun setupBoard() {
         textView1.setTextColor(ContextCompat.getColor(this,R.color.color_progress_none))
         memoryGame = MemoryGame(boardSize)
         adapter = MemoryBoardAdapter(this,boardSize,memoryGame.cards,object :MemoryBoardAdapter.CardClickListener{
             override fun onCardClicked(position: Int) {
-             updateGameWithFlip(position)
+                updateGameWithFlip(position)
             }
-
-
-
         })
         rvBoard.adapter = adapter
         rvBoard.setHasFixedSize(true)  // ??
         rvBoard.layoutManager =GridLayoutManager(this,boardSize.getWidth())
     }
+
     @SuppressLint("RestrictedApi")
     private fun updateGameWithFlip(position: Int){
 
